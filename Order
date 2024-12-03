@@ -1,0 +1,85 @@
+package org.example;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+class Order {
+    private String orderId;                  // Unique order ID
+    private Customer customer;               // Customer associated with the order
+    private List<Item> itemList;             // List of items in the order
+    private double taxRate;                  // Tax rate as a decimal (e.g., 0.1 for 10%)
+    private double shippingFee;              // Flat shipping fee
+
+    // Inner class representing an item in the order
+    class Item {
+        private String name;
+        private double price;
+        private int quantity;
+
+        public Item(String name, double price, int quantity) {
+            this.name = name;
+            this.price = price;
+            this.quantity = quantity;
+        }
+
+        public double getTotalPrice() {
+            return price * quantity;
+        }
+
+        @Override
+        public String toString() {
+            return name + " (x" + quantity + ") - $" + getTotalPrice();
+        }
+    }
+
+    // Constructor
+    public Order(Customer customer, double taxRate, double shippingFee) {
+        this.orderId = UUID.randomUUID().toString(); // Generate a unique ID
+        this.customer = customer;
+        this.taxRate = taxRate;
+        this.shippingFee = shippingFee;
+        this.itemList = new ArrayList<>();
+    }
+
+    // Add an item to the order
+    public void addItem(String name, double price, int quantity) {
+        itemList.add(new Item(name, price, quantity));
+    }
+
+    // Remove an item from the order by name
+    public boolean removeItem(String name) {
+        return itemList.removeIf(item -> item.name.equalsIgnoreCase(name));
+    }
+
+    // Calculate the subtotal of all items
+    public double calculateSubtotal() {
+        return itemList.stream()
+                .mapToDouble(Item::getTotalPrice)
+                .sum();
+    }
+
+    // Calculate the total tax
+    public double calculateTax() {
+        return calculateSubtotal() * taxRate;
+    }
+
+    // Calculate the total cost
+    public double calculateTotal() {
+        return calculateSubtotal() + calculateTax() + shippingFee;
+    }
+
+    // Get a summary of the order
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId='" + orderId + '\'' +
+                ", customer=" + customer.getUsername() +
+                ", itemList=" + itemList +
+                ", subtotal=$" + calculateSubtotal() +
+                ", tax=$" + calculateTax() +
+                ", shippingFee=$" + shippingFee +
+                ", total=$" + calculateTotal() +
+                '}';
+    }
+}
