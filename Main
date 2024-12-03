@@ -1,0 +1,46 @@
+package org.example;
+
+public class Main {
+    public static void main(String[] args) {
+        // Create a customer
+        Customer customer = new Customer("john_doe");
+
+        // Create an order for the customer
+        Order order = new Order(customer, 0.1, 10.0); // 10% tax, $10 shipping fee
+
+        // Add items to the order
+        order.addItem("Laptop", 1500.0, 1);   // One laptop at $1500
+        order.addItem("Book", 20.0, 3);       // Three books at $20 each
+        order.addItem("Headphones", 100.0, 2); // Two headphones at $100 each
+
+        // Print initial order details
+        System.out.println("Initial Order:");
+        System.out.println(order);
+
+        // Remove an item
+        System.out.println("\nRemoving 'Book' from the order...");
+        order.removeItem("Book");
+
+        // Print updated order details
+        System.out.println("\nUpdated Order:");
+        System.out.println(order);
+
+        // Add another item to the order
+        System.out.println("\nAdding 'Mouse' to the order...");
+        order.addItem("Mouse", 25.0, 1);
+
+        // Print final order details
+        System.out.println("\nFinal Order:");
+        System.out.println(order);
+    }
+}
+// Documents and method reasons:
+/*
+Order Constructor: Initializes an empty itemList to store items and generates a unique orderId.
+addItem Method: Adds an item to the order by creating an Item object with details (name, price, quantity).
+removeItem Method: Removes an item from the order by its name, returns true if successful, false otherwise.
+calculateSubtotal Method: Calculates the total cost of all items in the order before taxes and shipping.
+calculateTax Method: Computes the tax based on the subtotal and the tax rate.
+calculateTotal Method: Computes the final total cost, including subtotal, tax, and shipping fee.
+toString Method: Returns a string summary of the order, including orderId, customer, items, and totals.
+ */
