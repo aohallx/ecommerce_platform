@@ -1,0 +1,26 @@
+package org.example;
+
+import java.time.LocalDate;
+
+public class Grocery extends Product {
+    private LocalDate expirationDate;
+
+    public Grocery(String name, double price, LocalDate expirationDate) {
+        super(name, price);
+        this.expirationDate = expirationDate;
+    }
+
+    @Override
+    public String getCategory() {
+        return "Grocery";
+    }
+
+    public LocalDate getExpirationDate() {
+        return expirationDate;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Expiration Date: " + expirationDate;
+    }
+}
