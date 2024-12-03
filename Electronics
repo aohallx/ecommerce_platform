@@ -1,0 +1,30 @@
+package org.example;
+
+public class Electronics extends Product {
+    private String brand;
+    private String model;
+
+    public Electronics(String name, double price, String brand, String model) {
+        super(name, price);
+        this.brand = brand;
+        this.model = model;
+    }
+
+    @Override
+    public String getCategory() {
+        return "Electronics";
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Brand: " + brand + ", Model: " + model;
+    }
+}
